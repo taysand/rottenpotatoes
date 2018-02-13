@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   resources :movies
   
   #default route calls movies controller, index method
-  root :to => 'movie#index'
+  root :to => redirect('/movies')
 end
