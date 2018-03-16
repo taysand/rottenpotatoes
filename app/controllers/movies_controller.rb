@@ -10,28 +10,39 @@ class MoviesController < ApplicationController
         # will render app/views/movies/show.html.haml by default
     end
 
+    # note, you will also have to update the 'new' method:
     def new
+        @movie = Movie.new
         # default: render 'new' template
         # rails will default to an empty method if it's not there
         # so this one is optional 
     end
 
+    # replaces the 'create' method in controller:
     def create
         #raise @params.inspect 
-        @movie = Movie.create!(movie_params)
-        flash[:notice] = "#{@movie.title} was successfully created."
-        redirect_to movies_path
+        @movie = Movie.new(movie_params)
+        if @movie.save
+            flash[:notice] = "#{@movie.title} was successfully created."
+            redirect_to movies_path
+        else
+            render 'new' # note, 'new' template can access @movie's field values
+        end
     end
 
     def edit
         @movie = Movie.find params[:id]
     end
   
+    # replaces the 'update' method in controller:
     def update
         @movie = Movie.find params[:id]
-        @movie.update_attributes!(movie_params)
-        flash[:notice] = "#{@movie.title} was successfully updated."
-        redirect_to movie_path(@movie)
+        if @movie.update_attributes(params[:movie])
+            flash[:notice] = "#{@movie.title} was successfully updated."
+            redirect_to movie_path(@movie)
+        else
+            render 'edit' # note, 'edit' template can access @movie's field values!
+        end
     end
 
     def destroy
