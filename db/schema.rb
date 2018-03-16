@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180306175713) do
+ActiveRecord::Schema.define(version: 20180316003701) do
 
   create_table "movies", force: :cascade do |t|
     t.string "title"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20180306175713) do
     t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "oauth_token"
+    t.datetime "oauth_expires_at"
   end
 
   create_table "reviews", force: :cascade do |t|
