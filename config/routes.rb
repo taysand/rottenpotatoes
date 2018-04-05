@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'reviews/new'
+
+  get 'reviews/create'
+
   get 'sessions/create'
 
   get 'sessions/destroy'
@@ -8,7 +12,9 @@ Rails.application.routes.draw do
   #resources are sorta like data in databases
   #users can be resources
   #database of movies 
-  resources :movies
+  resources :movies do
+    resources :reviews
+  end
   
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')
